@@ -737,6 +737,27 @@ static int initr_kbd(void)
 }
 #endif
 
+//rex_do
+#ifdef REX_DRIVER_DEBUG
+static int rex_driver_debug(void)
+{
+	puts("###This is rex_driver_debug###\n");
+	#ifdef REX_SERIAL_ADDR
+	rex_serial_addr();
+	#endif
+	
+	#ifdef REX_LED_CLOSE
+	rex_led_close();
+	#endif
+	
+	#ifdef REX_PRINTF
+	rex_printf("###rex_printf: %d###\n", 20180516);
+	#endif
+		
+	return 0;
+}
+#endif
+
 static int run_main_loop(void)
 {
 #ifdef CONFIG_SANDBOX
@@ -968,6 +989,11 @@ init_fnc_t init_sequence_r[] = {
 #endif
 #if defined(CONFIG_SPARC)
 	prom_init,
+#endif
+
+//rex_do
+#if defined(REX_DRIVER_DEBUG)
+	rex_driver_debug,
 #endif
 	run_main_loop,
 };

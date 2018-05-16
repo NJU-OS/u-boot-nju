@@ -897,3 +897,62 @@ int console_init_r(void)
 }
 
 #endif /* CONFIG_SYS_CONSOLE_IS_IN_ENV */
+
+//rex_do
+#ifdef REX_PRINTF
+static void rex_putc(char c)
+{
+	if(c == '\n')
+	{
+		rex_putc('\r');
+	}
+	while(!(readb(0x3100014) & 0x20));
+	writeb(c, 0x3100000);
+}
+
+static void rex_puts(const char *str)
+{
+	while (*str)
+	{
+		rex_putc(*str++);
+	}
+}
+
+int rex_printf(const char *fmt, ...)
+{
+	va_list args;
+	uint i;
+	char printbuffer[CONFIG_SYS_PBSIZE];
+
+	va_start(args, fmt);
+
+	/*
+	 * For this to work, printbuffer must be larger than
+	 * anything we ever want to print.
+	 */
+	i = vscnprintf(printbuffer, sizeof(printbuffer), fmt, args);
+	va_end(args);
+
+	/* Print the string */
+	rex_puts(printbuffer);
+	
+	return i;
+}
+#endif
+
+#ifdef REX_LED_CLOSE
+void rex_led_close(void)
+{
+	writel(0x1, 0x22150D0);
+        writel(0x0, 0x22150CC);
+        writel(0x11, 0x22150C0);
+	puts("###rex led closed###\n");
+}
+#endif
+
+#ifdef REX_SERIAL_ADDR
+void rex_serial_addr(void)
+{
+	rex_serial_uclass();
+}
+#endif

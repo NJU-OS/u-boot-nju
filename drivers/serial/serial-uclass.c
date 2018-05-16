@@ -359,3 +359,20 @@ UCLASS_DRIVER(serial) = {
 	.per_device_auto_alloc_size = sizeof(struct serial_dev_priv),
 };
 #endif
+
+//rex_do
+#ifdef REX_SERIAL_ADDR
+
+#include <ns16550.h>
+
+void rex_serial_uclass(void)
+{
+        struct NS16550 *const com_port = dev_get_priv(gd->cur_serial_dev);
+        struct ns16550_platdata *plat = com_port->plat;
+        unsigned char *addr;
+        uint64_t offset = (uint64_t)&com_port->lsr - (uint64_t)com_port;
+        offset *= 1 << plat->reg_shift;
+        addr = (unsigned char *)plat->base + offset + plat->reg_offset;
+        printf("###rex serial addr: %llu###\n", (uint64_t)addr);
+}
+#endif
