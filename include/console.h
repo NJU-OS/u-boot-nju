@@ -49,4 +49,17 @@ void console_record_reset_enable(void);
 #include <iomux.h>
 #endif
 
+//rex_do
+#ifdef REX_SERIAL_ADDR
+void rex_serial_addr(void);
+#endif
+
+#ifdef REX_LED_CLOSE
+void rex_led_close(void);
+#endif
+
+#ifdef REX_PRINTF
+int rex_printf(const char *fmt, ...);
+#endif
+
 #endif
