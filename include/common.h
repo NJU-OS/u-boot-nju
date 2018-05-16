@@ -88,15 +88,18 @@ typedef volatile unsigned char	vu_char;
 #include <flash.h>
 #include <image.h>
 
+//rex_do
+//#define REX_DRIVER_DEBUG
+//#define REX_LED_CLOSE
+//#define REX_PRINTF
+//#define REX_SERIAL_ADDR
+
 /* Bring in printf format macros if inttypes.h is included */
 #define __STDC_FORMAT_MACROS
 
 #ifdef __LP64__
 #define CONFIG_SYS_SUPPORT_64BIT_DATA
 #endif
-
-//rex_do
-#define DEBUG
 
 #ifdef DEBUG
 #define _DEBUG	1
@@ -971,6 +974,11 @@ int cpu_release(int nr, int argc, char * const argv[]);
 /* Pull in stuff for the build system */
 #ifdef DO_DEPS_ONLY
 # include <environment.h>
+#endif
+
+//rex_do
+#ifdef REX_SERIAL_ADDR
+void rex_serial_uclass(void);
 #endif
 
 #endif	/* __COMMON_H_ */
