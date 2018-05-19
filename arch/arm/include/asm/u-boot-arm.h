@@ -26,6 +26,9 @@ extern ulong IRQ_STACK_START_IN;	/* 8 bytes in IRQ stack */
 int	cpu_init(void);
 int	cleanup_before_linux(void);
 
+//rex_do
+int	cleanup_before_vtos(void);
+
 /* Set up ARMv7 MMU, caches and TLBs */
 void	cpu_init_cp15(void);
 
