@@ -27,6 +27,9 @@ obj-$(CONFIG_DISPLAY_BOARDINFO_LATE) += board_info.o
 
 obj-$(CONFIG_CMD_BOOTM) += bootm.o bootm_os.o
 
+#rex_do
+obj-$(CONFIG_CMD_BOOTVTOS) += bootvtos.o
+
 # environment
 obj-y += env_attr.o
 obj-y += env_callback.o

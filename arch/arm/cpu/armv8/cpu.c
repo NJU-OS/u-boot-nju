@@ -46,3 +46,36 @@ int cleanup_before_linux(void)
 
 	return 0;
 }
+
+//rex_do
+void __weak board_cleanup_before_vtos(void){}
+
+int cleanup_before_vtos(void)
+{
+	/*
+	 * this function is called just before we call linux
+	 * it prepares the processor for linux
+	 *
+	 * disable interrupt and turn off caches etc ...
+	 */
+
+	board_cleanup_before_vtos();
+
+	disable_interrupts();
+
+	/*
+	 * Turn off I-cache and invalidate it
+	 */
+	icache_disable();
+	invalidate_icache_all();
+
+	/*
+	 * turn off D-cache
+	 * dcache_disable() in turn flushes the d-cache and disables MMU
+	 */
+	dcache_disable();
+	invalidate_dcache_all();
+
+	return 0;
+}
+

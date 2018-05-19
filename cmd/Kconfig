@@ -160,6 +160,13 @@ config CMD_BOOTM
 	help
 	  Boot an application image from the memory.
 
+#rex_do
+config CMD_BOOTVTOS
+	bool "bootvtos"
+	default y
+	help
+	  Boot the vtos.bin
+
 config CMD_BOOTZ
 	bool "bootz"
 	help

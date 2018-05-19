@@ -13,6 +13,9 @@ obj-y += help.o
 obj-y += version.o
 
 # command
+#rex_do
+obj-$(CONFIG_CMD_BOOTVTOS) += bootvtos.o
+
 obj-$(CONFIG_CMD_AES) += aes.o
 obj-$(CONFIG_CMD_AMBAPP) += ambapp.o
 obj-$(CONFIG_CMD_ARMFLASH) += armflash.o
