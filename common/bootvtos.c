@@ -57,14 +57,16 @@ static void announce_and_cleanup(void)
 
 static void boot_jump_vtos(char *addr)
 {
-	void (*kernel_entry)(void);
+	char* bin_size = getenv("bin_size");
+	void (*kernel_entry)(uint64_t);
+	uint64_t size = (uint64_t)simple_strtoul(bin_size, NULL, 10);
 	ulong ep = simple_strtoul(addr, NULL, 16);
-	kernel_entry = (void (*)(void))ep;
+	kernel_entry = (void (*)(uint64_t))ep;
 	printf("## Transferring control to vtos (at address 0x%lx)...\n",
 		(ulong) kernel_entry);
 	announce_and_cleanup();
 	do_nonsec_virt_switch();
-	kernel_entry();
+	kernel_entry(size);
 }
 
 int boot_vtos(char *addr)

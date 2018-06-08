@@ -51,7 +51,7 @@ static int ping_server(const char *ip)
 static int tftp_download(const char *addr, const char *bin_name)
 {
 	int size;
-
+	char bin_size[20];
 	load_addr = simple_strtoul(addr, NULL, 16);
 
 	copy_filename(net_boot_file_name, bin_name,
@@ -63,6 +63,8 @@ static int tftp_download(const char *addr, const char *bin_name)
 	{
 		return CMD_RET_FAILURE;
 	}
+	sprintf(bin_size, "%d", size);
+	setenv("bin_size", bin_size);
 
 	/* done if no file was loaded (no errors though) */
 	if (size == 0) 
